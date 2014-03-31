@@ -128,19 +128,19 @@ describe("apidemo - basic -", function () {
 
   describe('activity style: no period', function () {
     var session;
-    after(function () { session.tearDown(); });
+    after(function () { session.tearDown(this.currentTest.state === 'passed'); });
     it('should still find activity', function (done) {
       session = initSession(_.defaults({'app-activity': 'ApiDemos'}, desired));
-      session.setUp().nodeify(done);
+      session.setUp(this.parent.title + " " + this.title).nodeify(done);
     });
   });
 
   describe('activity style: fully qualified', function () {
     var session;
-    after(function () { session.tearDown(); });
+    after(function () { session.tearDown(this.currentTest.state === 'passed'); });
     it('should still find activity', function (done) {
       session = initSession(_.defaults({'app-activity': 'com.example.android.apis.ApiDemos'}, desired));
-      session.setUp().nodeify(done);
+      session.setUp(this.parent.title + " " + this.title).nodeify(done);
     });
   });
 
@@ -149,11 +149,11 @@ describe("apidemo - basic -", function () {
 
     describe('activity style: non-existent', function () {
       var session;
-      after(function () { session.tearDown(); });
+      after(function () { session.tearDown(this.currentTest.state === 'passed'); });
       it('should throw an error', function (done) {
         session = initSession(_.defaults({'app-activity': '.Blargimarg'}, desired), opts);
         try3Times(function () {
-          return session.setUp()
+          return session.setUp(this.parent.title + " " + this.title)
             .catch(function (err) { throw err.data; })
             .should.be.rejectedWith(/Activity used to start app doesn't exist/);
         }).nodeify(done);
@@ -162,12 +162,12 @@ describe("apidemo - basic -", function () {
 
     describe('bad app path', function () {
       var session;
-      after(function () { session.tearDown(); });
+      after(function () { session.tearDown(this.currentTest.state === 'passed'); });
       it('should throw an error', function (done) {
         var badAppPath = path.resolve(__dirname, "../../../sample-code/apps/ApiDemos/bin/ApiDemos-debugz.apk");
         session = initSession(_.defaults({'app': badAppPath}, desired), opts);
         try3Times(function () {
-          return session.setUp()
+          return session.setUp(this.parent.title + " " + this.title)
             .catch(function (err) { throw err.data; })
             .should.be.rejectedWith(/Error locating the app/);
         }).nodeify(done);
@@ -176,11 +176,11 @@ describe("apidemo - basic -", function () {
 
     describe('no activity sent in with caps', function () {
       var session;
-      after(function () { session.tearDown(); });
+      after(function () { session.tearDown(this.currentTest.state === 'passed'); });
       it('should throw an error', function (done) {
         session = initSession(_.omit(desired, 'app-activity'), opts);
         try3Times(function () {
-          return session.setUp()
+          return session.setUp(this.parent.title + " " + this.title)
             .catch(function (err) { throw err.data; })
             .should.be.rejectedWith(/app-activity/);
         }).nodeify(done);
@@ -189,11 +189,11 @@ describe("apidemo - basic -", function () {
 
     describe('no package sent in with caps', function () {
       var session;
-      after(function () { session.tearDown(); });
+      after(function () { session.tearDown(this.currentTest.state === 'passed'); });
       it('should throw an error', function (done) {
         session = initSession(_.omit(desired, 'app-package'), opts);
         try3Times(function () {
-          return session.setUp()
+          return session.setUp(this.parent.title + " " + this.title)
             .catch(function (err) { throw err.data; })
             .should.be.rejectedWith(/app-package/);
         }).nodeify(done);
@@ -235,11 +235,11 @@ describe("apidemo - basic -", function () {
 
   describe('appium android', function () {
     var session;
-    after(function () { session.tearDown(); });
+    after(function () { session.tearDown(this.currentTest.state === 'passed'); });
     it('should load a zipped app via url', function (done) {
       var appUrl = 'http://appium.s3.amazonaws.com/ApiDemos-debug.apk';
       session = initSession(_.defaults({'app': appUrl}, desired));
-      session.setUp().nodeify(done);
+      session.setUp(this.parent.title + " " + this.title).nodeify(done);
     });
   });
 

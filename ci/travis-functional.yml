@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '0.10'
+notifications:
+  email: false
+git:
+  submodules: false
+branches:
+  only:
+    - /^ci-.*$/
+env:
+  global:
+  - CI_CONFIG=functional
+  - secure: f2MwpYRdPJaCY1gG08/d76sRTRaABGTtuPTOWPD66Jb/kh1TxK+eCpmnzftlfVf48SmjR2fzmOcCwDknrYKPChU3LyMylveDRtSz/ght5D4Lt6F/V+p5C3Ztm+yV+SFt6H9F24+2c2lxgCgdR5weLt8YQnVYA26WKef1cMw9ius=
+  - secure: aRmqo2l+RaDcFKHJjFaAk6wf2oKdT/8a+FAVo8RXcHGgzEWI8nfEthO3zynGHqATBSETtDcU8CbxQbtmHpprUKsyqXrTn0hwkuCZrZRCS0V6wyoULImYXSoivxoimM1gx92w2xv3uqQWaiJX8eRiyk1G66w/0DJnejZUULMzuxI=
+  - secure: Tmf3Ne4r5DBCoZg61EIyDwv1EcO2aj6m/tW2vQkXqiICHuuVaT+/nlu3P9k/IprgECDND2SLcR0Yhs37isBkm97Nu19pFz7lL/xRSmyq43q2ANt4UOa4Gv6DoBFFdgD2fgtACf9xXEOXyXg+0lyqXKeCbGPZ7OYpGNg4i5BnrDk=
+script:
+- echo "-------> RUNNING the test"

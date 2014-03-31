@@ -74,8 +74,10 @@ describe('testapp - location services -', function () {
   _.extend(newDesired, {
     locationServicesAuthorized: true
   });
+
   it('should not work without bundleId', function (done) {
-    initSession(newDesired, {'no-retry': true}).setUp()
+    initSession(newDesired, {'no-retry': true})
+      .setUp(this.parent.title + " " + this.title)
       .then(function (err) {
         err.cause.value.message.should.contain("bundleId");
         throw err;

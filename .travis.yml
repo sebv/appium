@@ -2,17 +2,28 @@ language: objective-c
 osx_image: mavericks
 notifications:
   email: false
+branches:
+  only:
+  - master
+  - working
+git:
+  submodules: false
 env:
   global:
-  - secure: KNDEn/ryhd0yRGzpJSfHRKBzBIC73RKaHWFDkqD4E+iUXepwBfF2bBfningf8f++9qLNscumYZOHjQ0PWf/YALQCr5B2vHsGN+eHWc331d8f5sU/b6oyCAxsayI32lr/mNVCuHd44+ManMcKUH6831Q1qwa15o5w4dDPtJKuv6Y=
-  - secure: gZ9B0mE58AYdjVxvj5z27c+0pNJqrRzJiXdSe8T0UswR3gFxhOYoW1ikFTcij1NcQhdzDwGIDDJl30D6Z69Y73W3wagowkELasPeNcKobWqerof5lG8A6Qud90jXedABdXw9FEGnY47mG3/ZWwyx1KyOVkIlxoabkCqUwd7xaio=
+  # - secure: KNDEn/ryhd0yRGzpJSfHRKBzBIC73RKaHWFDkqD4E+iUXepwBfF2bBfningf8f++9qLNscumYZOHjQ0PWf/YALQCr5B2vHsGN+eHWc331d8f5sU/b6oyCAxsayI32lr/mNVCuHd44+ManMcKUH6831Q1qwa15o5w4dDPtJKuv6Y=
+  # - secure: gZ9B0mE58AYdjVxvj5z27c+0pNJqrRzJiXdSe8T0UswR3gFxhOYoW1ikFTcij1NcQhdzDwGIDDJl30D6Z69Y73W3wagowkELasPeNcKobWqerof5lG8A6Qud90jXedABdXw9FEGnY47mG3/ZWwyx1KyOVkIlxoabkCqUwd7xaio=
+  - SAUCE_STORAGE_ROOT=https://sebv.dev.saucelabs.net/rest/v1/storage
+  - secure: f2MwpYRdPJaCY1gG08/d76sRTRaABGTtuPTOWPD66Jb/kh1TxK+eCpmnzftlfVf48SmjR2fzmOcCwDknrYKPChU3LyMylveDRtSz/ght5D4Lt6F/V+p5C3Ztm+yV+SFt6H9F24+2c2lxgCgdR5weLt8YQnVYA26WKef1cMw9ius=
+  - secure: aRmqo2l+RaDcFKHJjFaAk6wf2oKdT/8a+FAVo8RXcHGgzEWI8nfEthO3zynGHqATBSETtDcU8CbxQbtmHpprUKsyqXrTn0hwkuCZrZRCS0V6wyoULImYXSoivxoimM1gx92w2xv3uqQWaiJX8eRiyk1G66w/0DJnejZUULMzuxI=
+  - secure: Tmf3Ne4r5DBCoZg61EIyDwv1EcO2aj6m/tW2vQkXqiICHuuVaT+/nlu3P9k/IprgECDND2SLcR0Yhs37isBkm97Nu19pFz7lL/xRSmyq43q2ANt4UOa4Gv6DoBFFdgD2fgtACf9xXEOXyXg+0lyqXKeCbGPZ7OYpGNg4i5BnrDk=
   matrix:
   - CI_CONFIG=unit
   - CI_CONFIG=build
 before_script:
+- ./ci/git-config.sh
 - ./ci/install-node.sh
 - ./ci/show-env.sh
-- npm install -g jshint grunt-cli
+- npm install -g jshint grunt-cli mocha
 - npm install
 - ./ci/before_script_extra.sh
 script:

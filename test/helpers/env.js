@@ -113,7 +113,21 @@ if (env.VERSION) {
   env.CAPS.version = env.VERSION;
 }
 
-// app path root
+// max retry
+if (process.env.MAX_RETRY) env.MAX_RETRY = parseInt(process.env.MAX_RETRY, 10);
+
+//dev tarball
+env.TARBALL = process.env.TARBALL;
+
+// add the tarball to caps
+if (env.SAUCE && env.TARBALL) {
+  env.CAPS['appium-version'] = {
+    'tarball': env.TARBALL,
+    'npm-install': true,
+    'local-app': true,
+    'appium-opts': '-m'
+  };
+}
 
 // rest enf points
 env.TEST_END_POINT = 'http://localhost:' + env.APPIUM_PORT + '/test/';
