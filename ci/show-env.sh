@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e
+set -e
 echo OS X version: `sw_vers -productVersion`
 echo Xcode version: `xcodebuild build -version`
 echo Xcode path: `xcode-select --print-path`

@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e
+set -e
 
 mkdir -p $HOME/tools/ant
 cd $HOME/tools/ant

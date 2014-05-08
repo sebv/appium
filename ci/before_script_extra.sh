@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e
+set -e
 if [[ $CI_CONFIG == 'build' ]]; then
     ./ci/install-ant.sh
     ./ci/install-maven.sh
