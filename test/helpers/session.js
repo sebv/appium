@@ -38,7 +38,11 @@ module.exports.initSession = function (desired, opts) {
   });
 
   return {
-    setUp: function () {
+    setUp: function (name) {
+      if (env.VERBOSE) {
+        console.log("env.APPIUM_HOST -->", env.APPIUM_HOST);
+        console.log("env.APPIUM_PORT -->", env.APPIUM_PORT);
+      }
       browser = wd.promiseChainRemote(env.APPIUM_HOST, env.APPIUM_PORT, env.APPIUM_USERNAME, env.APPIUM_PASSWORD);
       if (env.VERBOSE) {
         var MAX_DATA_LENGTH = 500;
@@ -54,13 +58,14 @@ module.exports.initSession = function (desired, opts) {
       }
       deferred.resolve(browser);
       var caps = _.defaults(desired, env.CAPS);
-      if (env.SAUCE) {
-        caps.name = this.currentTest.parent.title + " " + this.currentTest.title;
-      }
 
       if (env.VERBOSE) console.log("caps -->", caps);
       if (env.VERBOSE) console.log("opts -->", opts);
-
+  
+      if (env.SAUCE) {
+        desired.name = name;
+      }
+ 
       function init(remainingAttempts) {
         if (env.VERBOSE) console.log("remainingAttempts -->", remainingAttempts);
         return browser
@@ -77,6 +82,7 @@ module.exports.initSession = function (desired, opts) {
           });
       }
       var attempts = opts['no-retry'] ? 1 : 3;
+      if (env.MAX_RETRY) attempts = Math.min(env.MAX_RETRY, attempts);
       return browser.chain()
         .then(function () {
           if (env.IOS && env.RESET_IOS && !opts['no-reset']) {
@@ -91,11 +97,7 @@ module.exports.initSession = function (desired, opts) {
         .then(function () { initialized = true; })
         .setImplicitWaitTimeout(5000);
     },
-    tearDown: function () {
-      var passed = false;
-      if (this.currentTest) {
-        passed = this.currentTest.state = 'passed';
-      }
+    tearDown: function (passed) {
       return browser.chain()
         .then(function () {
           if (initialized && !opts['no-quit']) {

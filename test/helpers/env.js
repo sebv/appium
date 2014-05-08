@@ -141,8 +141,22 @@ if (env.VERSION) {
   env.CAPS.platformVersion = "7.0";
 }
 
-// app path root
+// max retry
+if (process.env.MAX_RETRY) env.MAX_RETRY = parseInt(process.env.MAX_RETRY, 10);
 
+//dev tarball
+env.TARBALL = process.env.TARBALL;
+
+// add the tarball to caps
+if (env.SAUCE && env.TARBALL) {
+  env.CAPS['appium-version'] = {
+    'appium-url': env.TARBALL,
+    //'npm-install': true,
+    'download-app': false,
+    'appium-startup-args': '-m'
+  };
+}
+  
 // rest enf points
 env.TEST_END_POINT = 'http://localhost:' + env.APPIUM_PORT + '/test/';
 env.GUINEA_TEST_END_POINT = env.TEST_END_POINT + 'guinea-pig';
