@@ -4,6 +4,11 @@ notifications:
   email: false
 rvm:
 - 2.1.1
+branches:
+  only:
+  - master
+git:
+  submodules: false
 env:
   global:
   - SAUCE_STORAGE_ROOT=https://ondemand.saucelabs.com/rest/v1/storage
