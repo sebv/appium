@@ -1,30 +1,18 @@
-language: objective-c
-osx_image: mavericks
+language: node_js
+node_js:
+- '0.10'
 notifications:
   email: false
-rvm:
-- 2.1.1
-branches:
-  only:
-  - master
 git:
   submodules: false
+branches:
+  only:
+    - /^ci-.*$/
 env:
   global:
-  - SAUCE_STORAGE_ROOT=https://saucelabs.com/rest/v1/storage
+  - CI_CONFIG=functional
   - secure: ZbVQJPMLZaRZjxMp7g/XRx3YE78Hf+hVRQjI+ShzEgIRpd4FCvf6yKwI8clF8azzhTNTaCd71UyhwsnkCB2qXqD8WVqhAADHPQHw3L1xQAJSL3iH9ZOGPdBEKI5gsTkX5WATSNUwa9YpWQGApPxvflFP8TaMzK7zbrDUb8G7m6Y=
   - secure: OXGxREjEn4hv/RSiaMBoYaZtsKbIz4/yP6ou6oQ5NUtGLbw8vqJMVISSyit1+Vz0Y5TQTZ+wElFo+63NZhhBSz1CrGD5kar4zgy6LAlYsM56eq+myfkRpaI/KPEKbrwyBfuzSuGZ9YgzYOPJ/DxrS/foaMJp9IEwALe4m4Woo5w=
   - secure: LD8NtDTcDHqnpWtBV3RSbvrv8a04sRsRwwg02eawidSXFRSbSnF5iMLooiLVEA9nquji2xfvhlS5ctNEKWgG+mTqS8APxdtMceerF6Mlg3tI1D3jTBlsQO1wOSIx9qFNZE4GGO/kB0iTvZrQ7JmRPZC3NQB/q0CLib/gTk6l8ZA=
-  matrix:
-  - CI_CONFIG=unit
-  - CI_CONFIG=build
-before_script:
-- gem install --no-rdoc --no-ri appium_doc_lint
-- "./ci/git-config.sh"
-- "./ci/install-node.sh"
-- "./ci/show-env.sh"
-- npm install -g jshint grunt-cli mocha
-- npm install
-- "./ci/before_script_extra.sh"
 script:
-- "./ci/script.sh"
+- echo "-------> RUNNING the test"
