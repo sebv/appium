@@ -3,6 +3,7 @@
 var env = require('../../../../helpers/env')
   , setup = require("../../../common/setup-base")
   , desired = require("../desired")
+  , reset = require("../reset")
   , atv = 'android.widget.TextView';
 
 describe("apidemo - find - basics", function () {
@@ -11,13 +12,14 @@ describe("apidemo - find - basics", function () {
   setup(this, desired).then(function (d) { driver = d; });
 
   if (env.FAST_TESTS) {
-    beforeEach(function (done) {
-      driver.resetApp().nodeify(done);
+    beforeEach(function () {
+      return reset(driver);
     });
   }
 
   it('should find a single element by content-description', function (done) {
     driver
+      //.sleep(300000)
       .elementByName("Animation").text().should.become("Animation")
       .nodeify(done);
   });
