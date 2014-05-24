@@ -1,0 +1,55 @@
+{
+  "group 1": [
+    "test/functional/common/jsonwp-specs.js",
+    "test/functional/android/apidemos/file-specs.js",
+    "test/functional/android/apidemos/find/complex-find-specs.js",
+    "test/functional/android/apidemos/gestures/execute-specs.js",
+    "test/functional/android/apidemos/gestures/swipe-specs.js",
+    "test/functional/android/apidemos/source-specs.js",
+    "test/functional/android/apidemos/touch/tap-specs.js",
+    "test/functional/android/chrome/execute-specs.js",
+    "test/functional/android/device-state-specs.js"
+  ],
+  "group 2": [
+    "test/functional/common/prelaunch-specs.js",
+    "test/functional/android/apidemos/find/basics-specs.js",
+    "test/functional/android/apidemos/find/from-el-specs.js",
+    "test/functional/android/apidemos/gestures/flick-specs.js",
+    "test/functional/android/apidemos/keyboard-specs.js",
+    "test/functional/android/apidemos/touch/drag-specs.js",
+    "test/functional/android/chrome/alerts-specs.js",
+    "test/functional/android/chrome/frames-specs.js",
+    "test/functional/android/toggle-specs.js"
+  ],
+  "group 3": [
+    "test/functional/android/apidemos/alerts-specs.js",
+    "test/functional/android/apidemos/find/by-accessibility-id-specs.js",
+    "test/functional/android/apidemos/find/invalid-strategy-specs.js",
+    "test/functional/android/apidemos/gestures/long-click-specs.js",
+    "test/functional/android/apidemos/location-specs.js",
+    "test/functional/android/apidemos/touch/multi-actions-specs.js",
+    "test/functional/android/chrome/basics-specs.js",
+    "test/functional/android/chrome/iframes-specs.js",
+    "test/functional/android/webview-specs.js"
+  ],
+  "group 4": [
+    "test/functional/android/apidemos/attributes-specs.js",
+    "test/functional/android/apidemos/find/by-uiautomator-specs.js",
+    "test/functional/android/apidemos/gestures/click-specs.js",
+    "test/functional/android/apidemos/gestures/pinch-specs.js",
+    "test/functional/android/apidemos/orientation-specs.js",
+    "test/functional/android/apidemos/touch/press-specs.js",
+    "test/functional/android/chrome/cookies-specs.js",
+    "test/functional/android/chrome/implicit-wait-specs.js"
+  ],
+  "group 5": [
+    "test/functional/android/apidemos/basic-specs.js",
+    "test/functional/android/apidemos/find/by-xpath-specs.js",
+    "test/functional/android/apidemos/gestures/drag-specs.js",
+    "test/functional/android/apidemos/gestures/scroll-specs.js",
+    "test/functional/android/apidemos/screenshot-specs.js",
+    "test/functional/android/apidemos/touch/swipe-specs.js",
+    "test/functional/android/chrome/execute-async-specs.js",
+    "test/functional/android/chrome/window-title-specs.js"
+  ]
+}
