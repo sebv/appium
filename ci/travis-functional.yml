@@ -10,7 +10,7 @@ branches:
     - /^ci-.*$/
 env:
   global:
-  - CI_CONFIG=functional
+  - CI_CONFIG=run_gappium
   - SAUCE_REST_ROOT=auto
   - APPIUM_HOST=auto
   - APPIUM_PORT=auto
