@@ -1,0 +1,18 @@
+{
+  "group 1": [
+    "test/functional/selendroid/api-specs.js",
+    "test/functional/selendroid/webview-specs.js"
+  ],
+  "group 2": [
+    "test/functional/selendroid/app-activities-specs.js"
+  ],
+  "group 3": [
+    "test/functional/selendroid/background-app-specs.js"
+  ],
+  "group 4": [
+    "test/functional/selendroid/timeouts-specs.js"
+  ],
+  "group 5": [
+    "test/functional/selendroid/uninstall-specs.js"
+  ]
+}
