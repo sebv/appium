@@ -38,22 +38,23 @@ Retrieving the network connection settings returns the same bitmask, from which
 the status can be decoded.
 
 ```js
-var connectionType = driver.getNetworkConnection();
-switch (connectionType) {
-  case 0:
-    // no network connection
-    break;
-  case 1:
-    // airplane mode
-    break;
-  case 2:
-    // wifi
-    break;
-  case 4:
-    // data
-    break;
-  case 6:
-    // wifi and data
-    break;
-}
+driver.getNetworkConnection().then(function (connectionType) {
+  switch (connectionType) {
+    case 0:
+      // no network connection
+      break;
+    case 1:
+      // airplane mode
+      break;
+    case 2:
+      // wifi
+      break;
+    case 4:
+      // data
+      break;
+    case 6:
+      // wifi and data
+      break;
+  }  
+});
 ```

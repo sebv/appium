@@ -106,10 +106,9 @@ See examples below:
 * **WD.js:**
 
 ```js
-// scroll the view down
-driver.execute("mobile: scroll", [{direction: 'down'}], function(err) {
-// continue testing
-});
+driver
+  .execute("mobile: scroll", [{direction: 'down'}])
+  // continue testing
 ```
 
 * **Java:**
