@@ -1,0 +1,48 @@
+1/ Install Jenkins (http://mirrors.jenkins-ci.org/osx/latest)
+
+2/ sudo su - jenkins
+    - clone appium
+    - run:
+    ./ci/installers/install-ant.sh
+    ./ci/installers/install-maven.sh
+    ./ci/installers/install-android.sh --api-19 --api-18 --api-16
+    npm install -g cordova
+     edit ~/.profile:
+
+export PATH=/usr/local/share/npm/bin
+export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+export PATH=$PATH:/Users/jenkins/Documents/Tools/android/sdk/tools
+export PATH=$PATH:/Users/jenkins/Documents/Tools/android/sdk/platform-tools
+export PATH=/Users/baba/Documents/Tools/apache-maven-3.1.1/bin:$PATH
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home"
+export ANDROID_HOME="/Users/jenkins/Documents/Tools/android/sdk"
+export SAUCE_USERNAME=<SAUCE_USERNAME>
+export SAUCE_ACCESS_KEY=<SAUCE_ACCESS_KEY>
+~
+
+3/ Go to http://localhost:8080/
+
+4/ Go to manage/plugin and install
+     - git plugin,
+     - authorize project plugin 
+     - parameterized trigger plugin
+     
+     then restart jerkins
+
+5/ In manage jenkins/"global security", configure "Access Control for Build", there should be a “configure build authorization in project option"   
+
+6/ In dashboard, create a freestyle project called appium
+     - configure all the github stuff (this is a public repo, so no need for auth)
+     - execute script: CI_CONFIG=build ./ci/script.sh
+
+
+7/ go back to dashboard, create a freestyle project called appium-ios
+     - configure all the github stuff (this is a public repo, so no need for auth)
+     - execute script: CI_CONFIG=ios ./ci/script.sh
+
+8/ in appium project config, go to post deploy target, and add a parameterized build pointing to appium-ios
+     - pass the following predefined parameters:
+          CI_BUILD_NUMBER=${BUILD_NUMBER}
+          CI_JOB_NUMBER=${BUILD_NUMBER}-ios
+     - add “pass through git commit parameter"
+     - add “pass parameter via property file”: tar ball.properties

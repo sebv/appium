@@ -5,6 +5,12 @@ if [[ $CI_CONFIG == 'ios' ]]; then
     ./ci/installers/install-ant.sh
     ./ci/installers/install-maven.sh
     sudo grunt authorize
+elif [[ $CI_CONFIG == 'build' ]]; then
+    ./ci/installers/install-ant.sh
+    ./ci/installers/install-maven.sh
+    ./ci/installers/install-android.sh --api-19 --api-18 --api-16
+    npm install -g cordova
+    sudo grunt authorize
 elif [[ $CI_CONFIG == 'android' ]]; then
     ./ci/installers/install-ant.sh
     ./ci/installers/install-maven.sh

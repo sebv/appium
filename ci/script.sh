@@ -1,78 +1,69 @@
 #!/bin/bash
 set -e
 
-TARBALL=appium-${TRAVIS_BRANCH}-${TRAVIS_JOB_NUMBER}-${TRAVIS_COMMIT:0:10}.tar.bz2
+source ~/.profile
 
-RUN_SAUCE=false
-if [[ $TRAVIS_SECURE_ENV_VARS == true ]] && [[ $TRAVIS_PULL_REQUEST == false ]]; then 
-    RUN_SAUCE=true
-fi
+export IOS_CONCURRENCY=10
+export ANDROID_CONCURRENCY=10
+export GAPPIUM_CONCURRENCY=10
+export SELENDROID_CONCURRENCY=10
+
+export SAUCE_REST_ROOT=https://saucelabs.com/rest/v1
+export APPIUM_HOST=ondemand.saucelabs.com
+export APPIUM_PORT=80
+
+export HTTP_RETRIES=5
+export HTTP_RETRY_DELAY=5000
+export DEBUG_CONNECTION=1
+export MOCHA_INIT_TIMEOUT=600000
+export LAUNCH_TIMEOUT='{"global":90000,"afterSimLaunch":30000}'
 
 if [[ $CI_CONFIG == 'unit' ]]; then
     # cd docs
     # appium_doc_lint || exit 1
     # cd -
     npm test
-elif [[ $CI_CONFIG == 'ios' ]]; then
+elif [[ $CI_CONFIG == 'build' ]]; then
     unset SUDO_UID
+    ulimit -n 8000
+    source ./ci/android_env
+    source ./ci/tarball-name.sh
+
     echo OS X version: `sw_vers -productVersion`
     echo Xcode version: `xcodebuild build -version`
     echo Xcode path: `xcode-select --print-path`
-    ./reset.sh --no-npmlink --dev --ios
-    if [[ $RUN_SAUCE == true ]]; then
-        TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
-        TARBALL=sauce-storage:$TARBALL \
-        ./ci/tools/parallel-mocha.js \
-        -p $IOS_CONCURRENCY \
-        -c ios
-    fi
+    echo JAVA_HOME: $JAVA_HOME    
+
+    ./reset.sh --ios --dev --no-npmlink
+    TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
+
+    echo "TARBALL=${TARBALL}" > tarball.properties
+    # for full build use param below
+    # ./reset.sh --ios --android -gappium --selendroid-quick --dev --no-npmlink
+    # TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
+
+elif [[ $CI_CONFIG == 'ios' ]]; then
+    npm install
+    TARBALL=sauce-storage:$TARBALL \
+    ./ci/tools/parallel-mocha.js \
+    -p $IOS_CONCURRENCY \
+    -c ios
 elif [[ $CI_CONFIG == 'android' ]]; then
-    source ./ci/android_env
-    echo JAVA_HOME: $JAVA_HOME
-    ./reset.sh --no-npmlink --dev --android 
-    if [[ $RUN_SAUCE == true ]]; then
-        TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
-        TARBALL=sauce-storage:$TARBALL \
-        ./ci/tools/parallel-mocha.js \
-        -p $ANDROID_CONCURRENCY \
-        -c android
-    fi
+    npm install
+    TARBALL=sauce-storage:$TARBALL \
+    ./ci/tools/parallel-mocha.js \
+    -p $ANDROID_CONCURRENCY \
+    -c android
 elif [[ $CI_CONFIG == 'gappium' ]]; then
-    if [[ $TRAVIS_PULL_REQUEST != false ]]; then 
-        echo "Skipping this config for pull requests, it takes too long."
-        exit 0 
-    fi
-    source ./ci/android_env
-    echo OS X version: `sw_vers -productVersion`
-    echo Xcode version: `xcodebuild build -version`
-    echo Xcode path: `xcode-select --print-path`
-    echo JAVA_HOME: $JAVA_HOME
-    ./reset.sh --ios --android --selendroid-quick --no-npmlink
-    ./reset.sh --dev --gappium --no-npmlink
-    if [[ $RUN_SAUCE == true ]]; then
-        TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
-        TARBALL=sauce-storage:$TARBALL \
-        ./ci/tools/parallel-mocha.js \
-        -p $GAPPIUM_CONCURRENCY \
-        -c gappium
-    fi
+    npm install
+    TARBALL=sauce-storage:$TARBALL \
+    ./ci/tools/parallel-mocha.js \
+    -p $GAPPIUM_CONCURRENCY \
+    -c gappium
 elif [[ $CI_CONFIG == 'selendroid' ]]; then
-    if [[ $TRAVIS_PULL_REQUEST != false ]]; then 
-        echo "Skipping this config for pull requests, it takes too long."
-        exit 0 
-    fi
-    source ./ci/android_env
-    echo OS X version: `sw_vers -productVersion`
-    echo Xcode version: `xcodebuild build -version`
-    echo Xcode path: `xcode-select --print-path`
-    echo JAVA_HOME: $JAVA_HOME
-    ./reset.sh --android --no-npmlink
-    ./reset.sh --dev --selendroid-quick --no-npmlink
-    if [[ $RUN_SAUCE == true ]]; then
-        TARBALL=$TARBALL ./ci/upload_build_to_sauce.sh
-        TARBALL=sauce-storage:$TARBALL \
-        ./ci/tools/parallel-mocha.js \
-        -p $SELENDROID_CONCURRENCY \
-        -c selendroid
-    fi
+    npm install
+    TARBALL=sauce-storage:$TARBALL \
+    ./ci/tools/parallel-mocha.js \
+    -p $SELENDROID_CONCURRENCY \
+    -c selendroid
 fi

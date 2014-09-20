@@ -17,12 +17,12 @@ env:
   - SAUCE_REST_ROOT=https://saucelabs.com/rest/v1
   - APPIUM_HOST=ondemand.saucelabs.com
   - APPIUM_PORT=80
-  - SAUCE_USERNAME=appium
+  - SAUCE_USERNAME=sebv
   - IOS_CONCURRENCY=30
   - ANDROID_CONCURRENCY=30
   - SELENDROID_CONCURRENCY=10
   - GAPPIUM_CONCURRENCY=10
-  - secure: GXGFbQptLEsKlaWnpOL2EB9hqQ4XBT6tqg7REt5j1h1jYBsfHQHSgSLt1jpzOF5kooXVbw2K7IrZyNVBXEUHR00Hp6O72FBOd+SSj8uPCJBLjAOaJWs0ZtujqGHwHpe6gadFfn0L7q0ffoV5OJVeNHHcuw4f9BaA78fTFNfm1jE=
+  - secure: mfvJJ/0R1im0Q4656egf5+Ki+UVDRWWXRZDNJn3okZEzXCw1eXYLYc3MDoVwwhdqovm7jJyQeGGE9jDiqRDvjtrTipsKydmuym5Nnob3SnW5TBmhhOJfN4ftpw3YnakLX9IXqmA5wSrArdV4g6uuWTIzckhvGoojhw7GE/jnEB0=
   - HTTP_RETRIES=5
   - HTTP_RETRY_DELAY=5000
   - DEBUG_CONNECTION=1
@@ -30,6 +30,7 @@ env:
   - LAUNCH_TIMEOUT='{"global":90000,"afterSimLaunch":30000}'
   matrix:
   - CI_CONFIG=unit
+  - CI_CONFIG=build
   # - CI_CONFIG=android
   # - CI_CONFIG=ios
   # - CI_CONFIG=gappium
@@ -47,4 +48,3 @@ before_script:
 # - "./ci/start-sauce-connect.sh"
 script:
 - "./ci/script.sh"
-- bash -c 'while true; do ping ondemand.saucelabs.com &> /dev/null; sleep 10; done' &
