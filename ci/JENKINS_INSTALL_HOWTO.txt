@@ -7,7 +7,7 @@
     ./ci/installers/install-maven.sh
     ./ci/installers/install-android.sh --api-19 --api-18 --api-16
     npm install -g cordova
-     edit ~/.profile:
+     edit ~/.profile [modify the path below accordingly]:
 
 export PATH=/usr/local/share/npm/bin
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
