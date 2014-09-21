@@ -45,4 +45,4 @@ export SAUCE_ACCESS_KEY=<SAUCE_ACCESS_KEY>
           CI_BUILD_NUMBER=${BUILD_NUMBER}
           CI_JOB_NUMBER=${BUILD_NUMBER}-ios
      - add “pass through git commit parameter"
-     - add “pass parameter via property file”: tar ball.properties
+     - add “pass parameter via property file”: tarball.properties
